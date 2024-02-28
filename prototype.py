@@ -97,29 +97,29 @@ def process_click(keys_pressed, notes):
 
 def move_notes(notes, note_speed):
     # Create new note
-    rng = random.randint(0, 1000)
-    if rng == 100:
+    rng = random.randint(0, 100)
+    if rng == 10:
         note = (pygame.Rect(LEFT_PINKY_NOTE.x, 500, 50, 50), TEXT_FONT.render("A", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 200:
+    elif rng == 20:
         note = (pygame.Rect(LEFT_RING_NOTE.x, 500, 50, 50), TEXT_FONT.render("S", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 300:
+    elif rng == 30:
         note = (pygame.Rect(LEFT_MIDDLE_NOTE.x, 500, 50, 50), TEXT_FONT.render("D", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 400:
+    elif rng == 40:
         note = (pygame.Rect(LEFT_INDEX_NOTE.x, 500, 50, 50), TEXT_FONT.render("F", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 500:
+    elif rng == 50:
         note = (pygame.Rect(RIGHT_INDEX_NOTE.x, 500, 50, 50), TEXT_FONT.render("J", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 600:
+    elif rng == 60:
         note = (pygame.Rect(RIGHT_MIDDLE_NOTE.x, 500, 50, 50), TEXT_FONT.render("K", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 700:
+    elif rng == 70:
         note = (pygame.Rect(RIGHT_RING_NOTE.x, 500, 50, 50), TEXT_FONT.render("L", 1, (0, 0, 0)))
         notes.append(note)
-    elif rng == 800:
+    elif rng == 80:
         note = (pygame.Rect(RIGHT_PINKY_NOTE.x, 500, 50, 50), TEXT_FONT.render(";", 1, (0, 0, 0)))
         notes.append(note)
 

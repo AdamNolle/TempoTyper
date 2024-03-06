@@ -9,6 +9,7 @@ BG = (5, 183, 237)
 FPS = 60
 
 TEXT_FONT = pygame.font.SysFont("ariel", 20)
+UI_FONT = pygame.font.SysFont("ariel", 40)
 LEFT_PINKY_NOTE = pygame.Rect(10, 50, 50, 50)
 LEFT_RING_NOTE = pygame.Rect(80, 50, 50, 50)
 LEFT_MIDDLE_NOTE = pygame.Rect(150, 50, 50, 50)
@@ -17,8 +18,15 @@ RIGHT_INDEX_NOTE = pygame.Rect(430, 50, 50, 50)
 RIGHT_MIDDLE_NOTE = pygame.Rect(500, 50, 50, 50)
 RIGHT_RING_NOTE = pygame.Rect(570, 50, 50, 50)
 RIGHT_PINKY_NOTE = pygame.Rect(640, 50, 50, 50)
+DIFFICULTY = ["Easy", "Normal", "Hard", "Impossible"]
+MULTIPLIER_MAX = 5
+MULTIPLIER_MIN = 1
 
 pygame.display.set_caption("This is a prototype")
+
+score = 0
+multiplier = MULTIPLIER_MIN
+notesHit = 0
 
 def main():
     global BG
@@ -27,6 +35,8 @@ def main():
 
     notes = []
     note_speed = 5
+    difficulty = DIFFICULTY[0]  # Change the number to change the difficulty
+
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
@@ -35,12 +45,12 @@ def main():
             elif event.type == pygame.KEYDOWN:
                 keys_pressed = pygame.key.get_pressed()
                 process_click(keys_pressed, notes)
-        move_notes(notes, note_speed)
-        draw_window(notes)
+        move_notes(notes, note_speed, difficulty)
+        draw_window(notes, difficulty)
     
     pygame.quit()
 
-def draw_window(notes): # Graphic design is my passion
+def draw_window(notes, difficulty): # Graphic design is my passion
     WINDOW.fill(BG)
 
     # Note indicators
@@ -58,46 +68,86 @@ def draw_window(notes): # Graphic design is my passion
         pygame.draw.rect(WINDOW, (255, 255, 255), i[0])
         WINDOW.blit(i[1], (i[0].x + 20, i[0].y + 20))
 
+    # UI
+    WINDOW.blit(UI_FONT.render("Score: " + str(score), 0, (0, 0, 0)), (10, 10))
+    WINDOW.blit(UI_FONT.render("Multiplier: " + str(multiplier), 0, (0, 0, 0)), (200, 10))
+    WINDOW.blit(UI_FONT.render("Difficulty: " + str(difficulty), 0, (0, 0, 0)), (400, 10))
+
     pygame.display.update()
 
 def process_click(keys_pressed, notes):
+    global score, notesHit, multiplier
+
     if keys_pressed[pygame.K_a]:
         for i in notes:
             if LEFT_PINKY_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_s]:
         for i in notes:
             if LEFT_RING_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_d]:
         for i in notes:
             if LEFT_MIDDLE_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_f]:
         for i in notes:
             if LEFT_INDEX_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_j]:
         for i in notes:
             if RIGHT_INDEX_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_k]:
         for i in notes:
             if RIGHT_MIDDLE_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_l]:
         for i in notes:
             if RIGHT_RING_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
     if keys_pressed[pygame.K_SEMICOLON]:
         for i in notes:
             if RIGHT_PINKY_NOTE.colliderect(i[0]):
                 notes.remove(i)
+                score = score + (10 * multiplier)
+                notesHit = notesHit + 1
+    
+    # Adjust multiplier
+    if notesHit >= 5 * multiplier:
+        notesHit = 0
+        if multiplier < MULTIPLIER_MAX:
+            multiplier = multiplier + 1
 
 
-def move_notes(notes, note_speed):
+def move_notes(notes, note_speed, difficulty):
+    global score, notesHit, multiplier
+    rng = 0
+
     # Create new note
-    rng = random.randint(0, 100)
+    if difficulty == "Easy":
+        rng = random.randint(0, 1000)
+    elif difficulty == "Normal":
+        rng = random.randint(0, 500)
+    elif difficulty == "Hard":
+        rng = random.randint(0, 100)
+    else:
+        rng = random.randint(1, 8) * 10
+    
     if rng == 10:
         note = (pygame.Rect(LEFT_PINKY_NOTE.x, 500, 50, 50), TEXT_FONT.render("A", 1, (0, 0, 0)))
         notes.append(note)
@@ -127,6 +177,12 @@ def move_notes(notes, note_speed):
     for i in notes:
         if i[0].y == 0:
             notes.remove(i)
+            if score > 50:
+                score = score - 50
+            else:
+                score = 0
+            notesHit = 0
+            multiplier = MULTIPLIER_MIN
         else:
             i[0].y -= note_speed
 

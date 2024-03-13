@@ -18,7 +18,7 @@ RIGHT_INDEX_NOTE = pygame.Rect(430, 50, 50, 50)
 RIGHT_MIDDLE_NOTE = pygame.Rect(500, 50, 50, 50)
 RIGHT_RING_NOTE = pygame.Rect(570, 50, 50, 50)
 RIGHT_PINKY_NOTE = pygame.Rect(640, 50, 50, 50)
-DIFFICULTY = ["Easy", "Normal", "Hard", "Impossible"]
+DIFFICULTY = ["Easy", "Normal", "Hard", "Good Luck"]
 MULTIPLIER_MAX = 5
 MULTIPLIER_MIN = 1
 
@@ -35,7 +35,7 @@ def main():
 
     notes = []
     note_speed = 5
-    difficulty = DIFFICULTY[0]  # Change the number to change the difficulty
+    difficulty = DIFFICULTY[2]  # Change the number to change the difficulty
 
     while run:
         clock.tick(FPS)
@@ -146,7 +146,7 @@ def move_notes(notes, note_speed, difficulty):
     elif difficulty == "Hard":
         rng = random.randint(0, 100)
     else:
-        rng = random.randint(1, 8) * 10
+        rng = random.randint(0, 8) * 10
     
     if rng == 10:
         note = (pygame.Rect(LEFT_PINKY_NOTE.x, 500, 50, 50), TEXT_FONT.render("A", 1, (0, 0, 0)))

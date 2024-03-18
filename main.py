@@ -1,5 +1,6 @@
 import pygame
 from note import Note
+from song import Song
 
 pygame.font.init()
 pygame.mixer.init()
@@ -15,13 +16,13 @@ TEXT_FONT = pygame.font.SysFont("ariel", 20)
 # Program constants
 MAIN_MENU_STATE, SONG_SELECT_STATE, GAMEPLAY_STATE = 0, 1, 2
 NOTE_TEXT = pygame.font.SysFont("ariel", 20)
+UI_TEXT = pygame.font.SysFont("ariel", 40)
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
-NOTE_SPEED = 5
 NOTE_DISTANCE = 100
 KEY_Y_POS = 50
 KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
-SONG_LIST = [("TestSong.mp3", "./Songs/TestSong.txt"), ("EasySong.mp3", "EasySong.txt"), ("MediumSong.mp3", "MediumSong.txt"), ("HardSong.mp3", "HardSong.txt")]
+SONG_LIST = [Song("TestSong", 5, "Easy"), Song("EasySong", 5, "Easy"), Song("MediumSong", 5, "Medium"), Song("HardSong", 5, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)
@@ -42,13 +43,15 @@ def main():
     run = True
     clock = pygame.time.Clock()
     currentState = SONG_SELECT_STATE # Change to MAIN_MENU_STATE once implemented
+    currentSong = SONG_LIST[0]
 
     # Variables
-    keysPressed = []
+    keysPressed = None
 
     # Repeats until user exits program
     while run:
         clock.tick(FPS)
+        keysPressed = None
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
@@ -59,11 +62,11 @@ def main():
             mainMenu()
             drawMainMenu()
         elif currentState == SONG_SELECT_STATE:
-            currentState = songSelect()
+            currentState = songSelect(currentSong)
             drawSongSelect()
         elif currentState == GAMEPLAY_STATE:
-            gameplay(keysPressed)
-            drawGameplay()
+            gameplay(keysPressed, currentSong)
+            drawGameplay(currentSong)
         else:
             pygame.error("Error: Entered invalid state")
         pygame.display.update()
@@ -79,11 +82,11 @@ def drawMainMenu():
     pass
 
 # Handles song selection logic
-def songSelect():
+def songSelect(currentSong):
     # Show list of songs
 
     # Load song once selected
-    loadSong(SONG_LIST[0])  # Test song
+    loadSong(currentSong)  # Test song
     return GAMEPLAY_STATE
 
 
@@ -92,19 +95,29 @@ def drawSongSelect():
     pass
 
 # Handles main gameplay logic
-def gameplay(keysPressed):
+def gameplay(keysPressed, currentSong):
     global notes
+
     # Check if keys have been pressed
+    if not keysPressed == None:
+        for index in range(len(LEFT_HAND_NOTE)):
+            for note in notes:
+                if LEFT_HAND_NOTE[index].colliderect(note[0]) or RIGHT_HAND_NOTE[index].colliderect(note[0]):
+                    if keysPressed[pygame.key.key_code(note[1].getSymbol())]:
+                        notes.remove(note)
+                        currentSong.noteHit()
+
 
     # Move notes in the chart
     for note in notes:
         if note[0].y <= 0:
             notes.remove(note)
+            currentSong.noteMiss()
         else:
-            note[0].y -= NOTE_SPEED
+            note[0].y -= currentSong.getChartSpeed()
 
 # Draws gameplay assets
-def drawGameplay():
+def drawGameplay(currentSong):
     global notes
     WINDOW.fill(GAMEPLAY_BACKGROUND)
     # Draw keys
@@ -117,11 +130,16 @@ def drawGameplay():
         pygame.draw.rect(WINDOW, WHITE, note[0])
         WINDOW.blit(TEXT_FONT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
 
+    # Draw UI
+    WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
+    WINDOW.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
+    WINDOW.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
+        
 # Loads the chart and initializes the song
 def loadSong(song):
     global notes
     notes = []
-    file = open(song[1], 'r')
+    file = open("./Songs/" + song.getChart(), 'r')
     data = file.readlines()
     for y in range(len(data)):
         for x in range(len(data[y])):
@@ -133,7 +151,7 @@ def loadSong(song):
             elif data[y][x] != " " and data[y][x] != "\n":
                 note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * NOTE_DISTANCE + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
                 notes.append(note)
-    #pygame.mixer.music.load(song[0])
+    #pygame.mixer.music.load("./Songs/" + song.getMP3())
     #pygame.mixer.music.play()
 
 if __name__ == "__main__":

@@ -49,11 +49,14 @@ class Song:
         self.notesHit = 0
         self.multiplier = MULTIPLIER_MIN
 
+    # Returns the current score
     def getScore(self):
         return str(self.score)
     
+    # Returns the current mutliplier
     def getMultiplier(self):
         return str(self.multiplier)
 
+    # Returns the difficulty of the song
     def getDifficulty(self):
         return self.difficulty    

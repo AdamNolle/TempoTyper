@@ -10,24 +10,23 @@ pygame.display.set_caption("Tempo Typer")
 WINDOW_WIDTH, WINDOW_HEIGHT = 600, 600
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 FPS = 60
-GAMEPLAY_BACKGROUND = (5, 183, 237)
-TEXT_FONT = pygame.font.SysFont("ariel", 20)
+NOTE_TEXT = pygame.font.SysFont("ariel", 20)
+UI_TEXT = pygame.font.SysFont("ariel", 40)
 
 # Program constants
 MAIN_MENU_STATE, SONG_SELECT_STATE, GAMEPLAY_STATE = 0, 1, 2
-NOTE_TEXT = pygame.font.SysFont("ariel", 20)
-UI_TEXT = pygame.font.SysFont("ariel", 40)
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
 NOTE_DISTANCE = 100
 KEY_Y_POS = 50
-KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
+#KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 SONG_LIST = [Song("TestSong", 5, "Easy"), Song("EasySong", 5, "Easy"), Song("MediumSong", 5, "Medium"), Song("HardSong", 5, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 KEY_COLOR = (191, 197, 199)
+GAMEPLAY_BACKGROUND = (5, 183, 237)
 
 # Hitboxes
 LEFT_HAND_NOTE = []
@@ -86,6 +85,7 @@ def songSelect(currentSong):
     # Show list of songs
 
     # Load song once selected
+    currentSong.reset()
     loadSong(currentSong)  # Test song
     return GAMEPLAY_STATE
 
@@ -107,7 +107,6 @@ def gameplay(keysPressed, currentSong):
                         notes.remove(note)
                         currentSong.noteHit()
 
-
     # Move notes in the chart
     for note in notes:
         if note[0].y <= 0:
@@ -128,7 +127,7 @@ def drawGameplay(currentSong):
     # Draw notes
     for note in notes:
         pygame.draw.rect(WINDOW, WHITE, note[0])
-        WINDOW.blit(TEXT_FONT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
+        WINDOW.blit(NOTE_TEXT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
 
     # Draw UI
     WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))

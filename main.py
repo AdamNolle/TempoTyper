@@ -17,10 +17,11 @@ UI_TEXT = pygame.font.SysFont("ariel", 40)
 MAIN_MENU_STATE, SONG_SELECT_STATE, GAMEPLAY_STATE = 0, 1, 2
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
-NOTE_DISTANCE = 100
 KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
-SONG_LIST = [Song("TestSong", 5, "Easy"), Song("EasySong", 5, "Easy"), Song("MediumSong", 5, "Medium"), Song("HardSong", 5, "Hard")]
+DEFAULT_NOTE_SPEED = 5
+DEFAULT_NOTE_SPACING = 100
+SONG_LIST = [Song("TestSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)
@@ -138,17 +139,17 @@ def drawGameplay(currentSong):
 def loadSong(song):
     global notes
     notes = []
-    file = open("./Songs/" + song.getChart(), 'r')
+    file = open("./Songs/" + song.getChart(), 'r')  # Change the first part of the path if there is an error
     data = file.readlines()
     for y in range(len(data)):
         for x in range(len(data[y])):
             # Left hand notes
             if data[y][x] != " " and data[y][x] != "\n" and x < 4:
-                note = (pygame.Rect(LEFT_HAND_NOTE[x].x, y * NOTE_DISTANCE + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
+                note = (pygame.Rect(LEFT_HAND_NOTE[x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
                 notes.append(note)
             # Right hand notes
             elif data[y][x] != " " and data[y][x] != "\n":
-                note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * NOTE_DISTANCE + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
+                note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
                 notes.append(note)
     #pygame.mixer.music.load("./Songs/" + song.getMP3())
     #pygame.mixer.music.play()

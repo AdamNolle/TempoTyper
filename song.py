@@ -5,10 +5,11 @@ MISS_SCORE = 50
 NOTE_STREAK = 5
 
 class Song:
-    def __init__(self, name, speed, difficulty):
+    def __init__(self, name, speed, spacing, difficulty):
         self.songChart = name + ".txt"
         self.songMP3 = name + ".mp3"
         self.chartSpeed = speed
+        self.chartSpacing = spacing
         self.difficulty = difficulty
         self.score = 0
         self.notesHit = 0
@@ -25,6 +26,10 @@ class Song:
     # Determines the speed of the chart
     def getChartSpeed(self):
         return self.chartSpeed
+    
+    # Determines the spacing of notes in the chart
+    def getChartSpacing(self):
+        return self.chartSpacing
     
     # Increment the score and adjust multiplier if necessary
     def noteHit(self):

@@ -10,7 +10,7 @@ pygame.display.set_caption("Tempo Typer")
 WINDOW_WIDTH, WINDOW_HEIGHT = 600, 600
 WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 FPS = 60
-NOTE_TEXT = pygame.font.SysFont("ariel", 20)
+NOTE_TEXT = pygame.font.SysFont("ariel", 30)
 UI_TEXT = pygame.font.SysFont("ariel", 40)
 
 # Program constants
@@ -21,7 +21,7 @@ KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+SONG_LIST = [Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)
@@ -151,8 +151,8 @@ def loadSong(song):
             elif data[y][x] != " " and data[y][x] != "\n":
                 note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
                 notes.append(note)
-    #pygame.mixer.music.load("./Songs/" + song.getMP3())
-    #pygame.mixer.music.play()
+    pygame.mixer.music.load("./Songs/" + song.getMP3())
+    pygame.mixer.music.play()
 
 if __name__ == "__main__":
     main()

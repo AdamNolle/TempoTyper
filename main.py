@@ -21,7 +21,7 @@ KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+SONG_LIST = [Song("Happy", 4, 25, "Medium"), Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)

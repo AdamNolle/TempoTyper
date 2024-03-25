@@ -1,0 +1,71 @@
+---Steps to make a song/chart:---
+
+1. Add an mp3 file containing the song you want to use in the 
+'Songs' folder.  Give it a title such as 'EasySong.mp3' or
+'SongName.mp3'
+
+2. Create a text file to use as the chart. It should be the same 
+name as the mp3 file.
+
+3. When creating the chart for the song, type a letter to add a note. 
+It would be ideal if the column of the letter matches the finger 
+that should be used (For example, if the letter used is 'A', it 
+should be placed in the first column to represent the left pinky, 
+and the letter 'P' should be in the 8th column to represent the 
+right pinky)
+
+4. Keep adding notes until you reach a desired length, or reach the
+end of the song.
+
+--------------------------------------------------------------------
+
+---Modifying chart settings---
+
+In 'main.py', there should be a constant called 'SONG_LIST' on line 24.
+This constant contains an array of all the songs that will be used in
+the game. Each index contains a Song object that has the following
+parameters:
+
+1. Name of the song (As used in 'Songs' folder)
+2. Chart Speed (How fast the notes move)
+3. Chart Spacing (How much space is between each note when placed)
+4. Difficulty (Should be 'Easy', 'Medium', or 'Hard')
+
+While there are default values present, feel free to change these values
+if you would like. There is also more information about these parameters
+in the 'Song.py' file.
+
+--------------------------------------------------------------------
+
+---Steps to test your song---
+
+1. Make sure that the 'Songs' folder contains the mp3 file of the song
+you want to use, as well as the text file of the song chart you made.
+
+2. Make sure that you updated the parameters in one of the indeces of
+the 'SONG_LIST' array to match the settings for your song.
+
+3. In line 46 of 'main.py', change the value of the index to match the
+index of your song.
+
+4. Run 'main.py', and your song should now be able to be played
+
+--------------------------------------------------------------------
+
+---Additional Notes---
+
+1. If you get a 'File Not Found' error when you run the program, you
+might have to change the file path on line 142 and line 154 of the
+'main.py' file. Since I am using a Mac, the file path format works
+for me, but I'm not sure if it works the same on Windows
+
+2. I've noticed that sometimes when running the program, the chart might
+not be synced to the music. This is probably due to the song being loaded
+at slightly different times each time the program is executed. I haven't
+looked too in depth at this issue, but it would still be a good idea to
+try running the program multiple times.
+
+3. I made a quick test chart in index 0 of the 'SONG_LIST' array. Feel
+free to use it as a reference when creating your chart.
+
+

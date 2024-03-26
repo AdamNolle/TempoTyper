@@ -9,20 +9,25 @@ Players start by choosing a song. They can also choose which letters they want t
 # To-do
 #### COMPLETE
 - Game will know when player presses each key and how close it was to the correct timing
-- Some sort of frontend so player knows when to press which key
+- Frontend so player knows when to press which key
 - Have song playing while player is typing
-#### Will
-- Add some more songs with varying difficulty levels
-- Add menu/main screen (for song selection and possibly settings)
-#### Should
-- Decently good-looking frontend
+- Two songs and difficulties to choose from
 - Menu to allow players to choose from multiple songs
-- Find mp3 files for songs we can use (list of 5 by end of semester?)
+#### Will
+- Fix timing on easy song
+- Add hard song
+#### Should
+- Allow user to select a new song once the first one is done
+- Better scoring depending how close to the actual hitbox the player typed
 #### Could
-- Database to remember which songs players have unlocked, their previous high scores, etc.
-- Settings like letting players choose which keys they want to practice or perhaps the ability to speed up/slow down songs
+- Take off points for unnecessary key presses
+- Give letters different colored backgrounds depending which row they are on
 - Short tutorial to explain how the game works
-  - Make hot cross buns song demo
+- Add more songs with varying difficulty levels
+- Add settings, perhaps with the ability to speed up/slow down songs
+- Better looking background while songs are playing
 - More miscellaneous polishing
 #### Won't
 - Leaderboard
+- Database to remember which songs players have unlocked, their previous high scores, etc.
+- Add specific setting that lets players choose which keys they want to practice

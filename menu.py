@@ -42,7 +42,8 @@ while running:
             elif button_start.collidepoint(event.pos):
                 # Start the game with selected difficulty
                 print(f"Starting game with difficulty: {selected_difficulty}")
-                # Here, integrate the functionality to start the game
+                import main
+                main.main(selected_difficulty)
             elif button_easy.collidepoint(event.pos):
                 selected_difficulty = 'Easy'
             elif button_medium.collidepoint(event.pos):

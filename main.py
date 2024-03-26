@@ -21,7 +21,7 @@ KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+SONG_LIST = [Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, 25, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
 
 # Colors
 BLACK = (0, 0, 0)
@@ -39,11 +39,17 @@ for i in range(4):
 # Global Variables
 notes = []
 
-def main():
+def main(selected_difficulty):
     run = True
     clock = pygame.time.Clock()
     currentState = SONG_SELECT_STATE # Change to MAIN_MENU_STATE once implemented
-    currentSong = SONG_LIST[1]
+    currentSong = None
+
+    # Sets the song to the corrosponding song for the difficulty level
+    for song in SONG_LIST:
+        if song.getDifficulty() == selected_difficulty:
+            currentSong = song
+            break
 
     # Variables
     keysPressed = None

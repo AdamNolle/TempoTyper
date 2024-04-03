@@ -14,20 +14,22 @@ NOTE_TEXT = pygame.font.SysFont("ariel", 30)
 UI_TEXT = pygame.font.SysFont("ariel", 40)
 
 # Program constants
-MAIN_MENU_STATE, SONG_SELECT_STATE, GAMEPLAY_STATE = 0, 1, 2
+LOAD_STATE, GAMEPLAY_STATE, RESULTS_STATE = 0, 1, 2
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
 KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", 8, 25, "Example"), Song("EasySong", DEFAULT_NOTE_SPEED, 25, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+SONG_LIST = [Song("TestSong", 8, 25, "Test"), Song("EasySong", DEFAULT_NOTE_SPEED, 25, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+RESULTS_POS = (WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4)
 
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 KEY_COLOR = (191, 197, 199)
 GAMEPLAY_BACKGROUND = (5, 183, 237)
+GRAY = (155, 155, 155)
 
 # Hitboxes
 LEFT_HAND_NOTE = []
@@ -42,8 +44,8 @@ notes = []
 def main(selected_difficulty):
     run = True
     clock = pygame.time.Clock()
-    currentState = SONG_SELECT_STATE # Change to MAIN_MENU_STATE once implemented
-    currentSong = None
+    currentState = LOAD_STATE
+    currentSong = SONG_LIST[0]  # Test song by default
 
     # Sets the song to the corrosponding song for the difficulty level
     for song in SONG_LIST:
@@ -64,42 +66,28 @@ def main(selected_difficulty):
             if event.type == pygame.KEYDOWN:
                 keysPressed = pygame.key.get_pressed()
 
-        if currentState == MAIN_MENU_STATE:
-            mainMenu()
-            drawMainMenu()
-        elif currentState == SONG_SELECT_STATE:
-            currentState = songSelect(currentSong)
-            drawSongSelect()
+        if currentState == LOAD_STATE:
+            currentSong.reset()
+            loadSong(currentSong)
+            currentState = GAMEPLAY_STATE
         elif currentState == GAMEPLAY_STATE:
+            if len(notes) == 0:
+                pygame.time.wait(500)
+                keysPressed = None
+                currentState = RESULTS_STATE
             gameplay(keysPressed, currentSong)
             drawGameplay(currentSong)
+        elif currentState == RESULTS_STATE:
+            drawResults(currentSong)
+            if not keysPressed == None and keysPressed[pygame.key.key_code("R")]:
+                currentState = LOAD_STATE
+            elif not keysPressed == None:
+                run = False
         else:
             pygame.error("Error: Entered invalid state")
         pygame.display.update()
 
     pygame.quit()
-
-# Handles main menu logic
-def mainMenu():
-    pass
-
-# Draws main menu assets
-def drawMainMenu():
-    pass
-
-# Handles song selection logic
-def songSelect(currentSong):
-    # Show list of songs
-
-    # Load song once selected
-    currentSong.reset()
-    loadSong(currentSong)  # Test song
-    return GAMEPLAY_STATE
-
-
-# Draws song selection assets
-def drawSongSelect():
-    pass
 
 # Handles main gameplay logic
 def gameplay(keysPressed, currentSong):
@@ -108,10 +96,10 @@ def gameplay(keysPressed, currentSong):
     # Check if keys have been pressed
     if not keysPressed == None:
         for index in range(len(LEFT_HAND_NOTE)):
-            for note in notes:
-                if LEFT_HAND_NOTE[index].colliderect(note[0]) or RIGHT_HAND_NOTE[index].colliderect(note[0]):
-                    if keysPressed[pygame.key.key_code(note[1].getSymbol())]:
-                        notes.remove(note)
+            for note in range(0, 8):
+                if note < len(notes) and (LEFT_HAND_NOTE[index].colliderect(notes[note][0]) or RIGHT_HAND_NOTE[index].colliderect(notes[note][0])):
+                    if keysPressed[pygame.key.key_code(notes[note][1].getSymbol())]:
+                        notes.remove(notes[note])
                         currentSong.noteHit()
 
     # Move notes in the chart
@@ -140,6 +128,17 @@ def drawGameplay(currentSong):
     WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
     WINDOW.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
     WINDOW.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
+
+def drawResults(currentSong):
+    WINDOW.fill(GAMEPLAY_BACKGROUND)
+    songSummary = currentSong.getSummary()
+
+    # Results Screen
+    pygame.draw.rect(WINDOW, KEY_COLOR, (RESULTS_POS[0], RESULTS_POS[1], WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2))
+    WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (RESULTS_POS[0] + WINDOW_WIDTH / 8, RESULTS_POS[0] + 20))
+    WINDOW.blit(UI_TEXT.render("Notes Hit: " + songSummary[0], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 60))
+    WINDOW.blit(UI_TEXT.render("Notes Missed: " + songSummary[1], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 100))
+    WINDOW.blit(UI_TEXT.render("Press 'R' to replay", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
         
 # Loads the chart and initializes the song
 def loadSong(song):
@@ -157,6 +156,7 @@ def loadSong(song):
             elif data[y][x] != " " and data[y][x] != "\n":
                 note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
                 notes.append(note)
+    pygame.mixer.stop()
     pygame.mixer.music.load("./Songs/" + song.getMP3())
     pygame.mixer.music.play()
 

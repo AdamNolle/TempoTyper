@@ -14,6 +14,8 @@ class Song:
         self.score = 0
         self.notesHit = 0
         self.multiplier = MULTIPLIER_MIN
+        self.totalNotesHit = 0
+        self.totalNotesMissed = 0
 
     # Get file name for chart
     def getChart(self):
@@ -35,6 +37,7 @@ class Song:
     def noteHit(self):
         self.score = self.score + (HIT_SCORE * self.multiplier)
         self.notesHit = self.notesHit + 1
+        self.totalNotesHit = self.totalNotesHit + 1
 
         if self.notesHit >= NOTE_STREAK * self.multiplier and self.multiplier < MULTIPLIER_MAX:
             self.notesHit = 0
@@ -43,6 +46,7 @@ class Song:
     # Reset multiplier and dock points
     def noteMiss(self):
         self.score = self.score - MISS_SCORE
+        self.totalNotesMissed = self.totalNotesMissed + 1
         if self.score < 0:
             self.score = 0
         self.notesHit = 0
@@ -53,6 +57,8 @@ class Song:
         self.score = 0
         self.notesHit = 0
         self.multiplier = MULTIPLIER_MIN
+        self.totalNotesHit = 0
+        self.totalNotesMissed = 0
 
     # Returns the current score
     def getScore(self):
@@ -64,4 +70,8 @@ class Song:
 
     # Returns the difficulty of the song
     def getDifficulty(self):
-        return self.difficulty    
+        return self.difficulty
+    
+    # Returns the number of notes hit and missed in the song
+    def getSummary(self):
+        return (str(self.totalNotesHit), str(self.totalNotesMissed))  

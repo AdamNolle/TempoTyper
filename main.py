@@ -8,13 +8,15 @@ pygame.display.set_caption("Tempo Typer")
 
 # Window settings
 WINDOW_WIDTH, WINDOW_HEIGHT = 600, 600
-WINDOW = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+MENU_WIDTH = 800
+window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 FPS = 60
 NOTE_TEXT = pygame.font.SysFont("ariel", 30)
 UI_TEXT = pygame.font.SysFont("ariel", 40)
 
 # Program constants
 LOAD_STATE, GAMEPLAY_STATE, RESULTS_STATE = 0, 1, 2
+EASY, MEDIUM, HARD = 1, 2, 3
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
 KEY_Y_POS = 50
@@ -38,10 +40,15 @@ for i in range(4):
     LEFT_HAND_NOTE.append(pygame.Rect(10 + ((NOTE_SIZE + NOTE_OFFSET) * i), KEY_Y_POS, NOTE_SIZE, NOTE_SIZE))
     RIGHT_HAND_NOTE.append(pygame.Rect(WINDOW_WIDTH - NOTE_SIZE - 10 - ((NOTE_SIZE + NOTE_OFFSET) * i), KEY_Y_POS, NOTE_SIZE, NOTE_SIZE))
 
+# Assets
+DIFFICULTY_STARS = pygame.transform.scale(pygame.image.load('./Assets/star.png'), (50, 50))
+
 # Global Variables
 notes = []
 
 def main(selected_difficulty):
+    global window
+    window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     run = True
     clock = pygame.time.Clock()
     currentState = LOAD_STATE
@@ -83,6 +90,8 @@ def main(selected_difficulty):
                 currentState = LOAD_STATE
             elif not keysPressed == None:
                 run = False
+                window = pygame.display.set_mode((MENU_WIDTH, WINDOW_HEIGHT))
+                return
         else:
             pygame.error("Error: Entered invalid state")
         pygame.display.update()
@@ -113,32 +122,32 @@ def gameplay(keysPressed, currentSong):
 # Draws gameplay assets
 def drawGameplay(currentSong):
     global notes
-    WINDOW.fill(GAMEPLAY_BACKGROUND)
+    window.fill(GAMEPLAY_BACKGROUND)
     # Draw keys
     for i in range(4):
-        pygame.draw.rect(WINDOW, KEY_COLOR, LEFT_HAND_NOTE[i])
-        pygame.draw.rect(WINDOW, KEY_COLOR, RIGHT_HAND_NOTE[i])
+        pygame.draw.rect(window, KEY_COLOR, LEFT_HAND_NOTE[i])
+        pygame.draw.rect(window, KEY_COLOR, RIGHT_HAND_NOTE[i])
 
     # Draw notes
     for note in notes:
-        pygame.draw.rect(WINDOW, WHITE, note[0])
-        WINDOW.blit(NOTE_TEXT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
+        pygame.draw.rect(window, WHITE, note[0])
+        window.blit(NOTE_TEXT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
 
     # Draw UI
-    WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
-    WINDOW.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
-    WINDOW.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
+    window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
+    window.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
+    window.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
 
 def drawResults(currentSong):
-    WINDOW.fill(GAMEPLAY_BACKGROUND)
+    window.fill(GAMEPLAY_BACKGROUND)
     songSummary = currentSong.getSummary()
 
     # Results Screen
-    pygame.draw.rect(WINDOW, KEY_COLOR, (RESULTS_POS[0], RESULTS_POS[1], WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2))
-    WINDOW.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (RESULTS_POS[0] + WINDOW_WIDTH / 8, RESULTS_POS[0] + 20))
-    WINDOW.blit(UI_TEXT.render("Notes Hit: " + songSummary[0], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 60))
-    WINDOW.blit(UI_TEXT.render("Notes Missed: " + songSummary[1], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 100))
-    WINDOW.blit(UI_TEXT.render("Press 'R' to replay", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
+    pygame.draw.rect(window, KEY_COLOR, (RESULTS_POS[0], RESULTS_POS[1], WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2))
+    window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (RESULTS_POS[0] + WINDOW_WIDTH / 8, RESULTS_POS[0] + 20))
+    window.blit(UI_TEXT.render("Notes Hit: " + songSummary[0], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 60))
+    window.blit(UI_TEXT.render("Notes Missed: " + songSummary[1], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 100))
+    window.blit(UI_TEXT.render("Press 'R' to replay", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
         
 # Loads the chart and initializes the song
 def loadSong(song):
@@ -158,6 +167,7 @@ def loadSong(song):
                 notes.append(note)
     pygame.mixer.stop()
     pygame.mixer.music.load("./Songs/" + song.getMP3())
+    pygame.time.wait(100)
     pygame.mixer.music.play()
 
 if __name__ == "__main__":

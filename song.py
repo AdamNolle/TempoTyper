@@ -1,7 +1,6 @@
 MULTIPLIER_MIN = 1
 MULTIPLIER_MAX = 5
 HIT_SCORE = 10
-MISS_SCORE = 50
 NOTE_STREAK = 5
 
 class Song:
@@ -45,7 +44,6 @@ class Song:
 
     # Reset multiplier and dock points
     def noteMiss(self):
-        self.score = self.score - MISS_SCORE
         self.totalNotesMissed = self.totalNotesMissed + 1
         if self.score < 0:
             self.score = 0

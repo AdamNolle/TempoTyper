@@ -3,6 +3,7 @@ import sys
 
 # Initialize Pygame
 pygame.init()
+pygame.display.set_caption("Tempo Typer")
 
 # Screen dimensions
 SCREEN_WIDTH, SCREEN_HEIGHT = 800, 600
@@ -14,7 +15,7 @@ BLACK = (0, 0, 0)
 GREY = (200, 200, 200)  # Color for unselected buttons
 
 # Load background image
-background = pygame.image.load('notebook.png')
+background = pygame.image.load('./Assets/notebook.png')
 background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
 # Font
@@ -44,6 +45,7 @@ while running:
                 print(f"Starting game with difficulty: {selected_difficulty}")
                 import main
                 main.main(selected_difficulty)
+                selected_difficulty = 'None'
             elif button_easy.collidepoint(event.pos):
                 selected_difficulty = 'Easy'
             elif button_medium.collidepoint(event.pos):

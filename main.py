@@ -21,6 +21,7 @@ NOTE_SIZE = 50
 NOTE_OFFSET = 20
 KEY_Y_POS = 50
 #KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
+KEYBOARD = [["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="], ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"], ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'"], ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
 SONG_LIST = [Song("TestSong", 8, 25, "Test"), Song("EasySong", DEFAULT_NOTE_SPEED, 25, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
@@ -42,6 +43,10 @@ for i in range(4):
 
 # Assets
 DIFFICULTY_STARS = pygame.transform.scale(pygame.image.load('./Assets/star.png'), (50, 50))
+NUMBER_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Number_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
+TOP_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Top_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
+MIDDLE_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Middle_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
+BOTTOM_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Bottom_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
 
 # Global Variables
 notes = []

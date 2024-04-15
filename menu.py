@@ -29,7 +29,7 @@ button_start = pygame.Rect(250, 500, 200, 50)
 button_quit = pygame.Rect(460, 500, 200, 50)
 
 # Track selected difficulty
-selected_difficulty = None
+selected_song = None
 
 # Main loop
 running = True
@@ -42,24 +42,24 @@ while running:
                 running = False
             elif button_start.collidepoint(event.pos):
                 # Start the game with selected difficulty
-                print(f"Starting game with difficulty: {selected_difficulty}")
+                print(f"Starting game with difficulty: {selected_song}")
                 import main
-                main.main(selected_difficulty)
-                selected_difficulty = 'None'
+                main.main(selected_song)
+                selected_song = None
             elif button_easy.collidepoint(event.pos):
-                selected_difficulty = 'Easy'
+                selected_song = 'EasySong'
             elif button_medium.collidepoint(event.pos):
-                selected_difficulty = 'Medium'
+                selected_song = 'MediumSong'
             elif button_hard.collidepoint(event.pos):
-                selected_difficulty = 'Hard'
+                selected_song = 'HardSong'
 
     # Draw background
     screen.blit(background, (0, 0))
 
     # Draw buttons
-    pygame.draw.rect(screen, WHITE if selected_difficulty == 'Easy' else GREY, button_easy)
-    pygame.draw.rect(screen, WHITE if selected_difficulty == 'Medium' else GREY, button_medium)
-    pygame.draw.rect(screen, WHITE if selected_difficulty == 'Hard' else GREY, button_hard)
+    pygame.draw.rect(screen, WHITE if selected_song == 'EasySong' else GREY, button_easy)
+    pygame.draw.rect(screen, WHITE if selected_song == 'MediumSong' else GREY, button_medium)
+    pygame.draw.rect(screen, WHITE if selected_song == 'HardSong' else GREY, button_hard)
     pygame.draw.rect(screen, WHITE, button_start)
     pygame.draw.rect(screen, WHITE, button_quit)
 

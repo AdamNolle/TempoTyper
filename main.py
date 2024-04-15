@@ -24,15 +24,14 @@ KEY_Y_POS = 50
 KEYBOARD = [["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="], ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"], ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'"], ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", 8, 25, "Test"), Song("EasySong", DEFAULT_NOTE_SPEED, 25, "Easy"), Song("MediumSong", 4, 25, "Medium"), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, "Hard")]
+SONG_LIST = [Song("TestSong", 8, 25, MEDIUM), Song("EasySong", DEFAULT_NOTE_SPEED, 25, EASY), Song("MediumSong", 4, 25, MEDIUM), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, HARD)]
 RESULTS_POS = (WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4)
 
 # Colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
-KEY_COLOR = (191, 197, 199)
-GAMEPLAY_BACKGROUND = (5, 183, 237)
-GRAY = (155, 155, 155)
+GAMEPLAY_BACKGROUND = (148, 214, 247)
+GRAY = (209, 209, 209)
 
 # Hitboxes
 LEFT_HAND_NOTE = []
@@ -42,16 +41,18 @@ for i in range(4):
     RIGHT_HAND_NOTE.append(pygame.Rect(WINDOW_WIDTH - NOTE_SIZE - 10 - ((NOTE_SIZE + NOTE_OFFSET) * i), KEY_Y_POS, NOTE_SIZE, NOTE_SIZE))
 
 # Assets
-DIFFICULTY_STARS = pygame.transform.scale(pygame.image.load('./Assets/star.png'), (50, 50))
+DIFFICULTY_STARS = pygame.transform.scale(pygame.image.load('./Assets/star.png'), (30, 30))
 NUMBER_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Number_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
 TOP_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Top_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
 MIDDLE_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Middle_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
 BOTTOM_ROW_KEY = pygame.transform.scale(pygame.image.load("./Assets/Bottom_Row_Key.png"), (NOTE_SIZE, NOTE_SIZE))
+INDICATOR_KEY = pygame.transform.scale(pygame.image.load("./Assets/Indicator_Key.png"), (NOTE_SIZE, NOTE_SIZE))
+KEY_COLORS = [NUMBER_ROW_KEY, TOP_ROW_KEY, MIDDLE_ROW_KEY, BOTTOM_ROW_KEY, INDICATOR_KEY]
 
 # Global Variables
 notes = []
 
-def main(selected_difficulty):
+def main(selected_song):
     global window
     window = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     run = True
@@ -61,7 +62,7 @@ def main(selected_difficulty):
 
     # Sets the song to the corrosponding song for the difficulty level
     for song in SONG_LIST:
-        if song.getDifficulty() == selected_difficulty:
+        if song.getName() == selected_song:
             currentSong = song
             break
 
@@ -130,29 +131,31 @@ def drawGameplay(currentSong):
     window.fill(GAMEPLAY_BACKGROUND)
     # Draw keys
     for i in range(4):
-        pygame.draw.rect(window, KEY_COLOR, LEFT_HAND_NOTE[i])
-        pygame.draw.rect(window, KEY_COLOR, RIGHT_HAND_NOTE[i])
+        window.blit(KEY_COLORS[len(KEY_COLORS) - 1], LEFT_HAND_NOTE[i])
+        window.blit(KEY_COLORS[len(KEY_COLORS) - 1], RIGHT_HAND_NOTE[i])
 
     # Draw notes
     for note in notes:
-        pygame.draw.rect(window, WHITE, note[0])
+        window.blit(KEY_COLORS[note[1].getKeyRow()], note[0])
         window.blit(NOTE_TEXT.render(note[1].getSymbol(), 1, BLACK), (note[0].x + 20, note[0].y + 20))
 
     # Draw UI
     window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
     window.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
-    window.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
+    #window.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
+    for i in range(currentSong.getDifficulty()):
+        window.blit(DIFFICULTY_STARS, (WINDOW_WIDTH - 40 - (35 * i), 10))
 
 def drawResults(currentSong):
     window.fill(GAMEPLAY_BACKGROUND)
     songSummary = currentSong.getSummary()
 
     # Results Screen
-    pygame.draw.rect(window, KEY_COLOR, (RESULTS_POS[0], RESULTS_POS[1], WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2))
+    pygame.draw.rect(window, GRAY, (RESULTS_POS[0], RESULTS_POS[1], WINDOW_HEIGHT / 2, WINDOW_WIDTH / 2))
     window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (RESULTS_POS[0] + WINDOW_WIDTH / 8, RESULTS_POS[0] + 20))
     window.blit(UI_TEXT.render("Notes Hit: " + songSummary[0], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 60))
     window.blit(UI_TEXT.render("Notes Missed: " + songSummary[1], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 100))
-    window.blit(UI_TEXT.render("Press 'R' to replay", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
+    window.blit(UI_TEXT.render("Press 'R' to retry", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
         
 # Loads the chart and initializes the song
 def loadSong(song):
@@ -164,16 +167,24 @@ def loadSong(song):
         for x in range(len(data[y])):
             # Left hand notes
             if data[y][x] != " " and data[y][x] != "\n" and x < 4:
-                note = (pygame.Rect(LEFT_HAND_NOTE[x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
+                row = assignKeyRow(data, y, x)
+                note = (pygame.Rect(LEFT_HAND_NOTE[x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x], row))
                 notes.append(note)
             # Right hand notes
             elif data[y][x] != " " and data[y][x] != "\n":
-                note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x]))
+                row = assignKeyRow(data, y, x)
+                note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x], row))
                 notes.append(note)
     pygame.mixer.stop()
     pygame.mixer.music.load("./Songs/" + song.getMP3())
-    pygame.time.wait(100)
+    pygame.time.wait(200)
     pygame.mixer.music.play()
+
+def assignKeyRow(data, y, x):
+    for i in range(len(KEYBOARD)):
+        if data[y][x] in KEYBOARD[i]:
+            return i
+    return len(KEY_COLORS) - 1
 
 if __name__ == "__main__":
     main()

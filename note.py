@@ -1,9 +1,10 @@
 SYMBOL_CONVERSION = [(",", "comma"), (".", "period"), (";", "semicolon"), ("/", "forward slash"), ("-", "minus sign"), ("[", "left bracket"), ("'", "quote"), ("=", "equals sign"), ("]", "right bracket"), ("\\", "backslash")]
 
 class Note:
-    def __init__(self, symbol):
+    def __init__(self, symbol, keyRow):
         self.symbol = symbol
         self.symbolName = symbol
+        self.keyRow = keyRow
 
         # If symbol contains symbol name, convert to symbol
         for i in SYMBOL_CONVERSION:
@@ -17,3 +18,7 @@ class Note:
     # Returns the name of the symbol
     def getSymbolName(self):
         return self.symbolName
+    
+    # Returns the row of the symbol
+    def getKeyRow(self):
+        return self.keyRow

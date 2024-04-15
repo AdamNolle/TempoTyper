@@ -1,5 +1,6 @@
 import pygame
 import sys
+import os
 
 # Initialize Pygame
 pygame.init()
@@ -21,12 +22,25 @@ background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 # Font
 FONT = pygame.font.SysFont(None, 48)
 
+# Constants
+BUTTON_WIDTH = SCREEN_WIDTH - 300
+BUTTON_HEIGHT = 50
+BUTTON_OFFSET = 70
+TOP_MARGIN = 50
+LEFT_MARGIN = 150
+
+# Get list of songs
+songs = []
+for songName in os.listdir("./Songs"):
+    if ".mp3" in songName and songName[0:len(songName) - 4] not in songs:
+        # Tuple contents: (Button Rect, Song name)
+        songTuple = (pygame.Rect(LEFT_MARGIN, TOP_MARGIN + (BUTTON_OFFSET * len(songs)), BUTTON_WIDTH, BUTTON_HEIGHT), songName[0:len(songName) - 4])
+        songs.append(songTuple)
+
 # Button definitions
-button_easy = pygame.Rect(100, 50, 200, 50)
-button_medium = pygame.Rect(300, 50, 200, 50)
-button_hard = pygame.Rect(500, 50, 200, 50)
 button_start = pygame.Rect(250, 500, 200, 50)
 button_quit = pygame.Rect(460, 500, 200, 50)
+
 
 # Track selected difficulty
 selected_song = None
@@ -41,38 +55,29 @@ while running:
             if button_quit.collidepoint(event.pos):
                 running = False
             elif button_start.collidepoint(event.pos):
-                # Start the game with selected difficulty
-                print(f"Starting game with difficulty: {selected_song}")
+                # Start the game with selected song
+                print(f"Starting game with chosen song: {selected_song}")
                 import main
                 main.main(selected_song)
                 selected_song = None
-            elif button_easy.collidepoint(event.pos):
-                selected_song = 'EasySong'
-            elif button_medium.collidepoint(event.pos):
-                selected_song = 'MediumSong'
-            elif button_hard.collidepoint(event.pos):
-                selected_song = 'HardSong'
+            else:
+                for song in songs:
+                    if song[0].collidepoint(event.pos):
+                        selected_song = song[1]
 
     # Draw background
     screen.blit(background, (0, 0))
 
-    # Draw buttons
-    pygame.draw.rect(screen, WHITE if selected_song == 'EasySong' else GREY, button_easy)
-    pygame.draw.rect(screen, WHITE if selected_song == 'MediumSong' else GREY, button_medium)
-    pygame.draw.rect(screen, WHITE if selected_song == 'HardSong' else GREY, button_hard)
+    # Draw buttons and text
+    for song in songs:
+        pygame.draw.rect(screen, WHITE if selected_song == song[1] else GREY, song[0])
+        song_text = FONT.render(song[1], True, BLACK)
+        screen.blit(song_text, (song[0].x + 10, song[0].y + 10))
+
     pygame.draw.rect(screen, WHITE, button_start)
     pygame.draw.rect(screen, WHITE, button_quit)
-
-    # Draw button texts
-    easy_text = FONT.render('Easy', True, BLACK)
-    medium_text = FONT.render('Medium', True, BLACK)
-    hard_text = FONT.render('Hard', True, BLACK)
     start_text = FONT.render('Start', True, BLACK)
     quit_text = FONT.render('Quit', True, BLACK)
-
-    screen.blit(easy_text, (button_easy.x + 50, button_easy.y + 10))
-    screen.blit(medium_text, (button_medium.x + 50, button_medium.y + 10))
-    screen.blit(hard_text, (button_hard.x + 50, button_hard.y + 10))
     screen.blit(start_text, (button_start.x + 50, button_start.y + 10))
     screen.blit(quit_text, (button_quit.x + 50, button_quit.y + 10))
 

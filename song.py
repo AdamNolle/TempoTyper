@@ -5,6 +5,7 @@ NOTE_STREAK = 5
 
 class Song:
     def __init__(self, name, speed, spacing, difficulty):
+        self.songName = name
         self.songChart = name + ".txt"
         self.songMP3 = name + ".mp3"
         self.chartSpeed = speed
@@ -15,6 +16,10 @@ class Song:
         self.multiplier = MULTIPLIER_MIN
         self.totalNotesHit = 0
         self.totalNotesMissed = 0
+
+    # Get name of song
+    def getName(self):
+        return self.songName
 
     # Get file name for chart
     def getChart(self):

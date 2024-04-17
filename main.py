@@ -21,11 +21,10 @@ EASY, MEDIUM, HARD = 1, 2, 3
 NOTE_SIZE = 50
 NOTE_OFFSET = 20
 KEY_Y_POS = 50
-#KEYBOARD_KEYS = [["1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
+#KEYBOARD_KEYS = [["`", "1", "q", "a", "z"], ["2", "w", "s", "x"], ["3", "e", "d", "c"], ["4", "r", "f", "v", "5", "t", "g", "b"], ["6", "y", "h", "n", "7", "u", "j", "m"], ["8", "i", "k", "comma"], ["9", "o", "l", "period"], ["0", "p", "semicolon", "forward slash", "minus sign", "left bracket", "quote", "equals sign", "right bracket", "backslash"]]
 KEYBOARD = [["`", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="], ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]", "\\"], ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'"], ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]]
 DEFAULT_NOTE_SPEED = 5
 DEFAULT_NOTE_SPACING = 100
-SONG_LIST = [Song("TestSong", 8, 25, MEDIUM), Song("EasySong", DEFAULT_NOTE_SPEED, 25, EASY), Song("MediumSong", 4, 25, MEDIUM), Song("HardSong", DEFAULT_NOTE_SPEED, DEFAULT_NOTE_SPACING, HARD)]
 RESULTS_POS = (WINDOW_WIDTH / 4, WINDOW_HEIGHT / 4)
 
 # Colors
@@ -59,13 +58,20 @@ def main(selected_song):
     run = True
     clock = pygame.time.Clock()
     currentState = LOAD_STATE
-    currentSong = SONG_LIST[0]  # Test song by default
+    currentSong = None
 
     # Sets the song to the corrosponding song for the difficulty level
-    for song in SONG_LIST:
-        if song.getName() == selected_song:
-            currentSong = song
-            break
+    for f in os.listdir("./Songs"):
+        if ".mp3" in f and f[0:len(f) - 4] == selected_song:
+            # set currentSong to settings in file
+            file = open("./Songs/" + f[0:len(f) - 4] + ".txt", 'r')
+            songSettings = file.readline().split()
+            currentSong = Song(selected_song, int(songSettings[0]), int(songSettings[1]), int(songSettings[2]))
+            file.close()
+
+    if currentSong == None:
+        print("An error has occurred loading the song")
+        return
 
     # Variables
     keysPressed = None
@@ -98,6 +104,7 @@ def main(selected_song):
             elif not keysPressed == None:
                 run = False
                 window = pygame.display.set_mode((MENU_WIDTH, WINDOW_HEIGHT))
+                pygame.mixer.music.stop()
                 return
         else:
             pygame.error("Error: Entered invalid state")
@@ -162,7 +169,8 @@ def drawResults(currentSong):
 def loadSong(song):
     global notes
     notes = []
-    file = open("./Songs/" + song.getChart(), 'r')  # Change the first part of the path if there is an error
+    file = open("./Songs/" + song.getChart(), 'r')
+    print("Song settings:", file.readline()) # Skip first line
     data = file.readlines()
     for y in range(len(data)):
         for x in range(len(data[y])):
@@ -176,7 +184,7 @@ def loadSong(song):
                 row = assignKeyRow(data, y, x)
                 note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x], row))
                 notes.append(note)
-    pygame.mixer.stop()
+    pygame.mixer.music.stop()
     pygame.mixer.music.load("./Songs/" + song.getMP3())
     pygame.time.wait(200)
     pygame.mixer.music.play()

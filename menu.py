@@ -56,10 +56,11 @@ while running:
                 running = False
             elif button_start.collidepoint(event.pos):
                 # Start the game with selected song
-                print(f"Starting game with chosen song: {selected_song}")
-                import main
-                main.main(selected_song)
-                selected_song = None
+                if not selected_song == None:
+                    print(f"Starting game with chosen song: {selected_song}")
+                    import main
+                    main.main(selected_song)
+                    selected_song = None
             else:
                 for song in songs:
                     if song[0].collidepoint(event.pos):

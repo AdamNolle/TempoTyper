@@ -2,6 +2,10 @@ MULTIPLIER_MIN = 1
 MULTIPLIER_MAX = 5
 HIT_SCORE = 10
 NOTE_STREAK = 5
+DEFAULT_SPEED = 5
+DEFAULT_SPACING = 100
+MIN_DIFFICULTY = 1
+MAX_DIFFICULTY = 5
 
 class Song:
     def __init__(self, name, speed, spacing, difficulty):
@@ -16,6 +20,21 @@ class Song:
         self.multiplier = MULTIPLIER_MIN
         self.totalNotesHit = 0
         self.totalNotesMissed = 0
+        self.verifyParameters()
+
+    # Check if parameters are valid, and fix them if they are not
+    def verifyParameters(self):
+        if self.chartSpeed <= 0:
+            self.chartSpeed = DEFAULT_SPEED
+
+        if self.chartSpacing <= 0:
+            self.chartSpacing = DEFAULT_SPACING
+
+        if self.difficulty > MAX_DIFFICULTY:
+            self.difficulty = MAX_DIFFICULTY
+        elif self.difficulty < MIN_DIFFICULTY:
+            self.difficulty = MIN_DIFFICULTY
+
 
     # Get name of song
     def getName(self):

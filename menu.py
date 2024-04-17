@@ -19,6 +19,9 @@ GREY = (200, 200, 200)  # Color for unselected buttons
 background = pygame.image.load('./Assets/notebook.png')
 background = pygame.transform.scale(background, (SCREEN_WIDTH, SCREEN_HEIGHT))
 
+# Load difficulty stars
+DIFFICULTY_STARS = pygame.transform.scale(pygame.image.load('./Assets/star.png'), (30, 30))
+
 # Font
 FONT = pygame.font.SysFont(None, 48)
 
@@ -33,8 +36,11 @@ LEFT_MARGIN = 150
 songs = []
 for songName in os.listdir("./Songs"):
     if ".mp3" in songName and songName[0:len(songName) - 4] not in songs:
-        # Tuple contents: (Button Rect, Song name)
-        songTuple = (pygame.Rect(LEFT_MARGIN, TOP_MARGIN + (BUTTON_OFFSET * len(songs)), BUTTON_WIDTH, BUTTON_HEIGHT), songName[0:len(songName) - 4])
+        # Tuple contents: (Button Rect, Song name, Difficulty)
+        file = open("./Songs/" + songName[0:len(songName) - 4] + ".txt", 'r')
+        difficulty = int(file.readline().split()[2])
+        file.close()
+        songTuple = (pygame.Rect(LEFT_MARGIN, TOP_MARGIN + (BUTTON_OFFSET * len(songs)), BUTTON_WIDTH, BUTTON_HEIGHT), songName[0:len(songName) - 4], difficulty)
         songs.append(songTuple)
 
 # Button definitions
@@ -74,6 +80,8 @@ while running:
         pygame.draw.rect(screen, WHITE if selected_song == song[1] else GREY, song[0])
         song_text = FONT.render(song[1], True, BLACK)
         screen.blit(song_text, (song[0].x + 10, song[0].y + 10))
+        for i in range(song[2]):
+            screen.blit(DIFFICULTY_STARS, (song[0].x + BUTTON_WIDTH - 40 - (35 * i), song[0].y + (BUTTON_HEIGHT / 4)))
 
     pygame.draw.rect(screen, WHITE, button_start)
     pygame.draw.rect(screen, WHITE, button_quit)

@@ -1,0 +1,1153 @@
+5 100 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+
+ E
+
+
+
+ 
+A
+
+
+ E
+
+
+A
+
+ 
+ E
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+
+ E
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+ 
+ E
+
+
+
+    
+A   J
+    
+
+ E
+
+
+A
+
+
+ E
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+ 
+ E
+
+
+
+
+A    K
+
+
+ E
+      L
+
+A
+
+
+ E
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+ 
+ E
+
+
+
+
+A      L
+
+      K
+ E
+     J
+
+A     K
+
+        
+ E     L
+
+      K
+
+     
+A
+       L
+
+ E    K
+       
+     J
+A     
+      K
+     
+ E
+       
+       L
+      
+      K
+A    
+     J  
+      
+ E    K
+
+
+A      L
+
+      K
+ E
+
+
+       L
+
+A     K
+    
+     J
+ E
+      K
+
+A
+       L
+ 
+ E    K
+
+     J
+
+      K
+A
+    J
+
+ E   K
+    
+    U
+A    
+    N
+    
+ E
+
+    I
+
+    I
+
+
+A
+    J
+
+ E   K
+
+    U
+A
+    N
+ 
+ E
+
+    I
+
+    I
+
+A   
+
+    J
+ E
+     K
+
+A   U
+
+    N
+ E
+
+
+    I
+
+A   I
+    
+    
+ E   
+    J
+    
+A    K
+    
+    U
+ E   
+    N
+     
+    
+    
+A   I
+    
+    I
+ E   
+
+    
+A   J
+    
+     K
+ E
+    U
+    
+    N
+    
+A
+    
+    I
+ E   
+    I
+    
+A
+    
+    J
+ E  
+     K
+    
+    U
+    
+A   N
+    
+
+ E   
+    I
+    
+A   I
+    
+
+ E
+    J
+    
+     K
+    
+A   U
+    
+    N
+ E   
+
+    
+A   I
+    
+    I
+ E
+
+    
+    J
+    
+A    K
+
+    U
+ E
+    N
+
+A
+
+    I
+ E
+    I
+
+
+
+A   J
+
+     K
+ E
+    U
+
+A   N
+
+
+ E
+    I
+
+    I
+
+A
+
+    J
+ E
+     K
+
+A   U
+
+    N
+ E
+
+
+    I
+
+A   I
+
+
+ E
+    J
+
+A    K
+
+    U
+ E
+    N
+
+
+
+A   J
+
+    
+ E  I
+    
+
+A   J
+    
+    
+ E  
+    
+    
+    
+    
+A   J
+
+    
+ E  I
+    
+    
+A   J
+
+
+ E  J
+    
+    
+    
+    
+A   J
+    
+    
+ E  I
+
+
+A   J
+    
+    
+ E
+    
+    
+
+    
+A   J
+
+    
+ E  I
+
+  
+A   J
+
+    
+ E  J
+    
+    
+    
+
+A   J
+
+
+ E  I
+    
+
+A   J
+    
+    
+ E 
+    
+    
+
+    
+A   J
+
+    
+ E  I
+
+    
+A   J
+
+
+ E  J
+
+    
+    
+
+A   J
+    
+
+ E  I
+    
+ 
+A   J
+
+
+ E
+
+
+
+    J
+A
+
+    I
+ E
+
+    J
+A
+
+    J
+ E
+
+
+
+    J
+A
+
+    I
+ E
+
+    J
+A
+
+
+ E
+
+
+    J
+
+A
+    I
+
+ E
+    J
+
+A
+    J
+
+ E
+
+
+    J
+
+A
+    I
+
+ E
+    J
+
+A  
+
+
+ E  
+
+
+
+
+A  
+
+
+ E 
+
+
+A  
+
+
+ E 
+
+
+
+
+A   B
+
+
+ E 
+
+   
+A  
+
+
+ E
+   
+    
+   
+
+A    I
+
+
+ E
+
+
+A
+
+    
+ E  
+    
+
+    
+      O
+A   
+
+    
+ E  
+
+
+A   
+
+
+ E
+
+
+
+
+A   Y
+
+
+ E  M
+
+
+A    L
+
+
+ E
+
+
+
+
+A   B
+
+     
+ E
+     
+
+A
+     
+
+ E
+
+
+
+      I
+A
+
+
+ E
+
+
+A
+      
+
+ E
+       O
+
+
+
+A
+
+
+ E
+
+       
+A   
+
+
+ E  
+       
+
+    
+       
+A
+    Y
+       
+ E
+    M
+
+A
+      L
+
+ E
+
+
+
+
+A
+
+    B
+ E
+
+
+A
+
+
+ E
+
+
+
+
+A
+     I
+
+ E
+
+
+A
+
+
+ E    
+
+      O
+
+
+A
+
+
+ E
+
+
+A   
+
+    
+ E  
+    
+    
+    
+
+A   
+    X
+   
+ E
+    
+
+A
+    X
+
+ E
+
+    
+
+    X
+A      
+
+      
+ E
+     
+
+A     
+
+        
+ E     
+
+      
+
+     
+A
+       
+
+ E    
+       
+     
+A     
+      
+     
+ E
+       
+       
+      
+      
+A    
+     
+      
+ E    
+
+
+A      
+
+      
+ E
+
+
+       
+
+A     
+    
+     
+ E
+      
+
+A
+       
+ 
+ E    
+
+     
+
+      
+A   J
+
+    
+ E  I
+    
+
+A   J
+    
+    
+ E  
+    
+    
+    
+    
+A   J
+
+    
+ E  I
+    
+    
+A   J
+
+
+ E  J
+    
+    
+    
+    
+A   J
+    
+    
+ E  I
+
+
+A   J
+    
+    
+ E
+    
+    
+
+    
+A   J
+
+    
+ E  I
+
+  
+A   J
+
+    
+ E  J
+    
+    
+    
+
+A   J
+
+
+ E  I
+    
+
+A   J
+    
+    
+ E 
+    
+    
+
+    
+A   J
+
+    
+ E  I
+
+    
+A   J
+
+
+ E  J
+
+    
+    
+
+A   J
+    
+
+ E  I
+    
+ 
+A   J
+
+
+ E
+
+
+
+    J
+A
+
+    I
+ E
+
+    J
+A
+
+    J
+ E
+
+
+
+    J
+A
+
+    I
+ E
+
+    J
+A
+
+
+ E
+
+
+    J
+
+A
+    I
+
+ E
+    J
+
+A
+    J
+
+ E
+
+
+    J
+
+A
+    I
+
+ E
+    J
+
+A  
+
+
+ E  
+
+
+
+
+A  
+
+
+ E 
+
+
+A  
+
+
+ E 
+
+
+
+
+A   B
+
+
+ E 
+
+   
+A  
+
+
+ E
+   
+    
+   
+
+A    I
+
+
+ E
+
+
+A
+
+    
+ E  
+    
+
+    
+      O
+A   
+
+    
+ E  
+
+
+A   
+
+
+ E
+
+
+
+
+A   Y
+
+
+ E  M
+
+
+A    L
+
+
+ E
+
+
+
+
+A   B
+
+     
+ E
+     
+
+A
+     
+
+ E
+
+
+
+      I
+A
+
+
+ E
+
+
+A
+      
+
+ E
+       O
+
+
+
+A
+
+
+ E
+
+       
+A   
+
+
+ E  
+       
+
+    
+       
+A
+    Y
+       
+ E
+    M
+
+A
+      L
+
+ E
+
+
+
+
+A
+
+    B
+ E
+
+
+A
+
+
+ E
+
+
+
+
+A
+     I
+
+ E
+
+
+A
+
+
+ E    
+
+      O
+
+
+A
+
+
+ E
+
+
+A   
+
+    
+ E  
+    
+    
+    
+
+A   
+    
+   
+ E
+    
+
+A
+    X
+
+ E
+
+    
+
+    X
+A      
+
+      
+ E
+     
+    X
+A     
+
+        
+ E     
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+
+ E
+ 
+
+
+
+A
+
+
+ E
+
+
+A
+
+
+ E
+
+
+
+
+A
+
+
+ E
+
+
+A
+
+
+ E

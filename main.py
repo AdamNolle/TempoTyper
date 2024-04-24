@@ -149,7 +149,7 @@ def drawGameplay(currentSong):
 
     # Draw UI
     window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (10, 10))
-    window.blit(UI_TEXT.render("Multiplier: " + currentSong.getMultiplier(), 0, (0, 0, 0)), (200, 10))
+    window.blit(UI_TEXT.render("X" + currentSong.getMultiplier(), 0, (0, 0, 0)), (280, 10))
     #window.blit(UI_TEXT.render(currentSong.getDifficulty(), 0, (0, 0, 0)), (400, 10))
     for i in range(currentSong.getDifficulty()):
         window.blit(DIFFICULTY_STARS, (WINDOW_WIDTH - 40 - (35 * i), 10))

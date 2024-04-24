@@ -163,7 +163,8 @@ def drawResults(currentSong):
     window.blit(UI_TEXT.render("Score: " + currentSong.getScore(), 1, BLACK), (RESULTS_POS[0] + WINDOW_WIDTH / 8, RESULTS_POS[0] + 20))
     window.blit(UI_TEXT.render("Notes Hit: " + songSummary[0], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 60))
     window.blit(UI_TEXT.render("Notes Missed: " + songSummary[1], 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 100))
-    window.blit(UI_TEXT.render("Press 'R' to retry", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 250))
+    window.blit(UI_TEXT.render("Press 'R' to retry", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 225))
+    window.blit(UI_TEXT.render("Press 'Q' to quit", 1, BLACK), (RESULTS_POS[0] + 20, RESULTS_POS[1] + 265))
         
 # Loads the chart and initializes the song
 def loadSong(song):

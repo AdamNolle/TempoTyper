@@ -101,7 +101,7 @@ def main(selected_song):
             drawResults(currentSong)
             if not keysPressed == None and keysPressed[pygame.key.key_code("R")]:
                 currentState = LOAD_STATE
-            elif not keysPressed == None:
+            elif not keysPressed == None and keysPressed[pygame.key.key_code("Q")]:
                 run = False
                 window = pygame.display.set_mode((MENU_WIDTH, WINDOW_HEIGHT))
                 pygame.mixer.music.stop()
@@ -172,6 +172,10 @@ def loadSong(song):
     notes = []
     file = open("./Songs/" + song.getChart(), 'r')
     print("Song settings:", file.readline()) # Skip first line
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("./Songs/" + song.getMP3())
+    pygame.mixer.music.play()
+    pygame.mixer.music.pause()
     data = file.readlines()
     for y in range(len(data)):
         for x in range(len(data[y])):
@@ -185,10 +189,8 @@ def loadSong(song):
                 row = assignKeyRow(data, y, x)
                 note = (pygame.Rect(RIGHT_HAND_NOTE[3 - x].x, y * song.getChartSpacing() + KEY_Y_POS, NOTE_SIZE, NOTE_SIZE), Note(data[y][x], row))
                 notes.append(note)
-    pygame.mixer.music.stop()
-    pygame.mixer.music.load("./Songs/" + song.getMP3())
     pygame.time.wait(200)
-    pygame.mixer.music.play()
+    pygame.mixer.music.unpause()
 
 def assignKeyRow(data, y, x):
     for i in range(len(KEYBOARD)):

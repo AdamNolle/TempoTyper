@@ -152,29 +152,29 @@ A     L
 
 A    K
 
-        
+
   E   L
 
      K
 
-     
+
 A
       L
 
   E  K
-       
+
     J
-A     
+A
      K
-     
+
   E
-       
+
       L
-      
+
      K
-A    
-    J  
-      
+A
+    J
+
   E  K
 
 

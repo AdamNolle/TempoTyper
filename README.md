@@ -1,36 +1,31 @@
 # TempoTyper
-Keyboard Rhythm Game for Capstone I
-
+Keyboard Typing Rhythm Game for Capstone I
 
 # TempoTyper Rules
-Players start by choosing a song. Then, letters will come up from the bottom of the screen and once they enter a hitbox at the top (which should coincide with the beat of the song), the player should type that letter. There are 8 different hitboxes depending which finger the player is expected to use to type the letter. At the end of the song, the player will be able to see their score and how many letters they missed and can then choose a new song or choose to quit.
+This game has some similarities with Guitar Hero and Dance Dance Revolution. Players start by choosing a song. Then during the actual gameplay, letters will come up from the bottom of the screen and players are expected to type them once they reach their respective hitbox (which should coincide with the beat of the song). There are 8 hitboxes to show the recommended finger to use to type the given letter. There is also a multiplier if the player types enough letters correct in a row. At the end, the score along with total correct and incorrect letters will appear and the player can choose a new song or quit.
 
-
-# To-do
+# Capstone I Work
 #### COMPLETE
+- Basic frontend
 - Menu to allow players to choose from multiple songs
-- Three songs and difficulties to choose from (plus a test song)
-- Allow user to select a new song once the current one is done
+  - Stars to show level difficulty of song
+  - Three songs and difficulties to choose from
 - Have song playing while player is typing
-- Basic frontend so player knows when to press which key
-- Point multiplier if user gets multiple correct in a row
-- Game knows when player presses each key and how close it was to the correct timing
-- Letters have different colored backgrounds depending which keyboard row they are on
-- Stars to show level difficulty
-#### Will
-- Fix timing on easy song
-- Fix letter placement on medium song
-- Fix letter placement on hard song
-#### Should
-- Better scoring depending how close to the actual hitbox the player typed
-#### Could
-- Take off points for unnecessary key presses
-- Short tutorial to explain how the game works
+  - Point multiplier if user gets multiple correct in a row
+  - Game knows when player presses each key and how close it was to the correct timing
+  - Letters have different colored backgrounds depending which keyboard row they are on
+- Allow player to select a new song once the current one is done
+- More songs can be added if new respective .mp3 and .txt files are added to the codebase
+
+# Ideas for the future
+### Relatively Simple
+- Reset multiplier after unnecessary key presses
 - Add more songs with varying difficulty levels
-- Add settings, perhaps with the ability to speed up/slow down songs
-- Better looking background while songs are playing
-- More miscellaneous polishing
-#### Won't
+- Better looking frontend
+- Short tutorial to explain how the game works
+- Better scoring depending how close to the actual hitbox the player typed
+### Complex
 - Leaderboard
 - Database to remember which songs players have unlocked, their previous high scores, etc.
+- Add settings, perhaps with the ability to speed up/slow down songs
 - Add specific setting that lets players choose which keys they want to practice
